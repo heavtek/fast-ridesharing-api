@@ -2,6 +2,7 @@ import express from "express"
 
 import { db } from "./config/firebase.js";
 import dotenv from "dotenv";
+import authRoutes from "./routes/authRoutes.js"
 async function testFireBase() {
     const collections=await db.listCollections();
     console.log("firebase connected")
@@ -13,6 +14,9 @@ dotenv.config();
 const app=express();
 
 app.use(express.json());
+
+app.use("/auth",authRoutes);
+
 
 const PORT=5000;
 

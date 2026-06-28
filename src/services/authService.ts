@@ -1,26 +1,31 @@
 import admin from "firebase-admin"
 import { db } from "../config/firebase.js"
 
-export const createProfile=async(uid:string,name:string,email:string,
-    phone:string
-)=>{
+export const createProfile = async (
+  uid: string,
+  name: string,
+  phone: string,
+  gender: string
+) => {
+  const userRef = db.collection("users").doc(uid);
 
-    const userRef=db.collection("users").doc(uid);
+  const userDoc = await userRef.get();
 
-    const userDoc=await  userRef.get();
+  if (userDoc.exists) {
+    return userDoc.data();
+  }
 
-    if(userDoc.exists){
-        return userDoc.data();
-    }
-
-const user={
+  const user = {
     uid,
-    email,phone,name,
-    role:"PASSENGER",
-    createdAt:admin.firestore.FieldValue.serverTimestamp(),
-};
+    name,
+    phone,
+    gender,
+    role: "PASSENGER",
+    walletBalance: 0,
+    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+  };
 
-await userRef.set(user);
+  await userRef.set(user);
+
   return user;
-
-}
+};
