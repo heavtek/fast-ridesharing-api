@@ -6,6 +6,7 @@ import {
   findDrivers,
   acceptRide,
   requestRide,
+  startTrip
 } from "../controllers/driverController.js";
 
 import { authMiddleware } from "../middleware/authMiddleware.js";
@@ -23,5 +24,5 @@ router.patch("/driver/location", updateLocation);
 router.post("/ride/request", requestRide);
 router.get("/ride/drivers", findDrivers);
 router.post("/ride/accept", acceptRide);
-
+router.patch("/ride/start",startTrip)
 export default router;
